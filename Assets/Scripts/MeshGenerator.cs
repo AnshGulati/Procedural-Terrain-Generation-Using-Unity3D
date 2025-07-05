@@ -2,96 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshFilter))]
-public class MeshGenerator : MonoBehaviour
+public static class MeshGenerator
 {
-    public Mesh mesh;
-    public Vector3[] vertices;
-    public int[] triangles;
-    public Color[] colors;
-    public Gradient gradient;
-
-    public int xsize = 20;
-    public int zsize = 20;
-
-    float minTerrainHeight;
-    float maxTerrainHeight;
-
-    // Start is called before the first frame update
-    void Start()
+    public static MeshData GenerateTerrainMesh(float[,] heightMap,float heightMultiplier,AnimationCurve heightCurve, int levelOfDetail)
     {
-        mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = mesh;
+        int width = heightMap.GetLength(0);
+        int height = heightMap.GetLength(1);
+        float TopleftX = (width - 1) / -2f;
+        float TopleftZ = (height - 1) / 2f;
 
-        CreateShape();
-        updateMesh();
-    }
+        int meshSimplificationIncerment =(levelOfDetail==0)?1:levelOfDetail * 2;
+        int verticesPerLine = (width - 1) / meshSimplificationIncerment + 1;
 
-    void CreateShape()
-    {
-        vertices = new Vector3[(xsize + 1) * (zsize + 1)];
-        triangles = new int[xsize * zsize * 6];
-        int vert = 0;
-        int tris = 0;
+        MeshData meshData = new MeshData(verticesPerLine,verticesPerLine);
+        int vertexIndex = 0;
 
-        for (int i = 0, z = 0; z <= zsize; z++)
+        for (int y = 0; y < height; y+=meshSimplificationIncerment)
         {
-            for (int x = 0; x <= xsize; x++)
+            for (int x = 0; x < width; x +=meshSimplificationIncerment)
             {
-                float y = Mathf.PerlinNoise(x*.3f, z*.3f)*2f;
-                vertices[i] = new Vector3(x, y, z);
+                meshData.vertices[vertexIndex] = new Vector3(TopleftX + x, heightCurve.Evaluate(heightMap[x, y])*heightMultiplier, TopleftZ - y);
+                meshData.uvs[vertexIndex] = new Vector2(x / (float)width, y / (float)height);
 
-                if (y < minTerrainHeight) minTerrainHeight = y;
-                if (y > maxTerrainHeight) maxTerrainHeight = y;
-
-                i++;
+                if (x < width - 1 && y < height - 1)
+                {
+                    meshData.AddTraingle(vertexIndex, vertexIndex + verticesPerLine + 1, vertexIndex + verticesPerLine);
+                    meshData.AddTraingle(vertexIndex + verticesPerLine + 1, vertexIndex, vertexIndex + 1);
+                }
+                vertexIndex++;
             }
         }
-
-        for (int z = 0; z < zsize; z++)
-        {
-            for (int i = 0; i < xsize; i++)
-            {
-                triangles[tris + 0] = vert + 0;
-                triangles[tris + 1] = vert + xsize + 1;
-                triangles[tris + 2] = vert + 1;
-                triangles[tris + 3] = vert + 1;
-                triangles[tris + 4] = vert + xsize + 1;
-                triangles[tris + 5] = vert + xsize + 2;
-                vert++;
-                tris += 6;
-            }
-            vert++;
-        }
-
-        colors= new Color[vertices.Length];
-        for (int i = 0,z = 0;z <= zsize; z++)
-        {
-            for(int x=0;x<=xsize;x++)
-            {
-                float height = Mathf.InverseLerp(minTerrainHeight,maxTerrainHeight, vertices[i].y);
-                colors[i] = gradient.Evaluate(height);
-                i++;
-            }
-        }
+        return meshData;
     }
+}
 
-    void updateMesh()
+public class MeshData
     {
-        mesh.vertices = vertices;
-        mesh.triangles = triangles;
-        mesh.colors = colors;
+        public Vector3[] vertices;
+        public int[] triangles;
+        public Vector2[] uvs;
 
-        mesh.RecalculateNormals();
-    }
+        int triangleIndex;
 
-    //private void OnDrawGizmos()
-    //{
-    //    if (vertices == null) return;
+        public MeshData(int meshWidth, int meshHeight)
+        {
+            vertices = new Vector3[meshWidth * meshHeight];
+            uvs = new Vector2[meshWidth * meshHeight];
+            triangles = new int[(meshWidth - 1) * (meshHeight - 1) * 6];
+        }
 
-    //    for(int i = 0; i < vertices.Length; i++)
-    //    {
-    //        Gizmos.DrawSphere(vertices[i],0.1f);
-    //    }
-    //}
+        public void AddTraingle(int a, int b, int c)
+        {
+            triangles[triangleIndex] = a;
+            triangles[triangleIndex + 1] = b;
+            triangles[triangleIndex + 2] = c;
+            triangleIndex += 3;
+        }
+
+        public Mesh CreateMesh()
+        {
+            Mesh mesh = new Mesh();
+            mesh.vertices = vertices;
+            mesh.triangles = triangles;
+            mesh.uv = uvs;
+            mesh.RecalculateNormals();
+            return mesh;
+        }
 }
