@@ -1,4 +1,4 @@
-Shader "Custom/Terrain"
+Shader "Universal Render Pipeline/Terrain"
 {
     Properties
     {
@@ -36,8 +36,9 @@ Shader "Custom/Terrain"
 
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
-            //float heightPercent=inverseLerp(minHeight,maxHeight,IN.worldPos.y);
-            o.Albedo=float3(0,1,0);
+            float heightPercent=inverseLerp(minHeight,maxHeight,IN.worldPos.y);
+            // o.Albedo=float3(0,1,0);
+            o.Albedo= heightPercent;
         }
         ENDCG
     }
