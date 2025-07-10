@@ -32,6 +32,21 @@
         },
         {
             "m_Id": "2d1b7a9bb2874a919f235b4e2f55bed5"
+        },
+        {
+            "m_Id": "dc6cf463093943bdb01a8db2b23448da"
+        },
+        {
+            "m_Id": "9e429f19f34a41a8bba7a8bdbe7fc8ea"
+        },
+        {
+            "m_Id": "70f5be67583c4ce997f85b03d47ee1f3"
+        },
+        {
+            "m_Id": "d891f93ecda841dea69bdbf51a9864c7"
+        },
+        {
+            "m_Id": "8e745251779749b0a2ae5b7eb54ba21c"
         }
     ],
     "m_Keywords": [],
@@ -173,6 +188,21 @@
         },
         {
             "m_Id": "b5780a67e0c845838a89ee051b5e8e6b"
+        },
+        {
+            "m_Id": "c5dbcd3ce4a54d63a40079cb3d1a9146"
+        },
+        {
+            "m_Id": "a641194122454b808f3b8d3fa635e3fd"
+        },
+        {
+            "m_Id": "954239060f004b6baee6da8c05ce36f9"
+        },
+        {
+            "m_Id": "1c0b529703564927b52fb2b165852b38"
+        },
+        {
+            "m_Id": "c7141f06aab64d7aab4da0762f54fa57"
         }
     ],
     "m_GroupDatas": [
@@ -187,6 +217,9 @@
         },
         {
             "m_Id": "c1784405b7fd46768aa2e9d4042c5527"
+        },
+        {
+            "m_Id": "0ece4a43e70944bdaf21bfd314ab260b"
         }
     ],
     "m_StickyNoteDatas": [],
@@ -245,6 +278,20 @@
                     "m_Id": "8f801e3507d047d9acefa2e66b346ea5"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "1c0b529703564927b52fb2b165852b38"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "117f424fb1ee45849c0eeef68154d3a0"
+                },
+                "m_SlotId": 5
             }
         },
         {
@@ -628,6 +675,20 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
+                    "m_Id": "954239060f004b6baee6da8c05ce36f9"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "4c5d46a1ba364761a5d7a05390239e07"
+                },
+                "m_SlotId": 5
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
                     "m_Id": "9ee2f9ba9c4c49a7befe6b34474727fe"
                 },
                 "m_SlotId": 0
@@ -651,6 +712,20 @@
                     "m_Id": "45029e6b31404053bbfa134d9560d2a0"
                 },
                 "m_SlotId": 1
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "a641194122454b808f3b8d3fa635e3fd"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "c3827ac100ec4064923f93eb56a6940c"
+                },
+                "m_SlotId": 5
             }
         },
         {
@@ -763,6 +838,34 @@
                     "m_Id": "c7e3d24ee21b4e5eaa7b171f14563167"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "c5dbcd3ce4a54d63a40079cb3d1a9146"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "6aae266bc6c34d49aa0e082c18aa0a16"
+                },
+                "m_SlotId": 5
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "c7141f06aab64d7aab4da0762f54fa57"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "619732b940174687884a1eaaee6d9384"
+                },
+                "m_SlotId": 5
             }
         },
         {
@@ -1081,6 +1184,17 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.GroupData",
+    "m_ObjectId": "0ece4a43e70944bdaf21bfd314ab260b",
+    "m_Title": "Water Texture",
+    "m_Position": {
+        "x": -660.0,
+        "y": -1765.5999755859375
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
     "m_ObjectId": "0f09e921fb0c4fe1924222d26f996a2e",
     "m_Id": 0,
@@ -1311,6 +1425,42 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "1c0b529703564927b52fb2b165852b38",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -86.4000015258789,
+            "y": 2287.199951171875,
+            "width": 139.1999969482422,
+            "height": 33.60009765625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "90f3729041b0476ea904ff5b01f0d989"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "d891f93ecda841dea69bdbf51a9864c7"
     }
 }
 
@@ -2464,13 +2614,16 @@
             "m_Id": "6ea1acfde923467a8c5be96495e099c0"
         },
         {
+            "m_Id": "dc6cf463093943bdb01a8db2b23448da"
+        },
+        {
+            "m_Id": "ff1eb131a0dd4052b11c6fd60a5ba87c"
+        },
+        {
             "m_Id": "afe2336f0752464b8ebfc9d2d6119e44"
         },
         {
             "m_Id": "347d5cb6ac8a430cbf954caf130c9563"
-        },
-        {
-            "m_Id": "ff1eb131a0dd4052b11c6fd60a5ba87c"
         },
         {
             "m_Id": "ca8035bf8e9d4ac7b735048596c0106c"
@@ -2482,13 +2635,25 @@
             "m_Id": "c290f0407c1d4c319c4c7ba3858e57a3"
         },
         {
+            "m_Id": "9e429f19f34a41a8bba7a8bdbe7fc8ea"
+        },
+        {
             "m_Id": "da2d4d3ace97492e828edcc69258e030"
         },
         {
             "m_Id": "6373babf9d094bafb814d5e58e9e7e7a"
         },
         {
+            "m_Id": "70f5be67583c4ce997f85b03d47ee1f3"
+        },
+        {
             "m_Id": "2d1b7a9bb2874a919f235b4e2f55bed5"
+        },
+        {
+            "m_Id": "d891f93ecda841dea69bdbf51a9864c7"
+        },
+        {
+            "m_Id": "8e745251779749b0a2ae5b7eb54ba21c"
         }
     ]
 }
@@ -2512,16 +2677,16 @@
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "5e57075c316d4b0bb6ebcef7517f0bf1",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "0ece4a43e70944bdaf21bfd314ab260b"
     },
     "m_Name": "Property",
     "m_DrawState": {
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -344.0,
-            "y": -1722.4000244140625,
-            "width": 115.99996948242188,
+            "x": -344.00006103515627,
+            "y": -1705.60009765625,
+            "width": 192.80007934570313,
             "height": 33.5999755859375
         }
     },
@@ -2746,7 +2911,7 @@
     "m_Type": "UnityEditor.ShaderGraph.TriplanarNode",
     "m_ObjectId": "6aae266bc6c34d49aa0e082c18aa0a16",
     "m_Group": {
-        "m_Id": ""
+        "m_Id": "0ece4a43e70944bdaf21bfd314ab260b"
     },
     "m_Name": "Triplanar",
     "m_DrawState": {
@@ -2891,6 +3056,34 @@
         "m_Guid": ""
     },
     "m_DefaultType": 0
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "70f5be67583c4ce997f85b03d47ee1f3",
+    "m_Guid": {
+        "m_GuidSerialized": "c2904b72-b4e0-45da-834d-b5119dc6b0a3"
+    },
+    "m_Name": "Grass_Tiling",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Grass_Tiling",
+    "m_DefaultReferenceName": "_Grass_Tiling",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.25,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
 }
 
 {
@@ -3468,6 +3661,34 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "8e745251779749b0a2ae5b7eb54ba21c",
+    "m_Guid": {
+        "m_GuidSerialized": "3a6db648-b741-4104-b840-590879afd14b"
+    },
+    "m_Name": "Snow_Tiling",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Snow_Tiling",
+    "m_DefaultReferenceName": "_Snow_Tiling",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.6000000238418579,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.LerpNode",
     "m_ObjectId": "8f801e3507d047d9acefa2e66b346ea5",
@@ -3511,6 +3732,21 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "90f3729041b0476ea904ff5b01f0d989",
+    "m_Id": 0,
+    "m_DisplayName": "Rocks_Tiling",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -3559,6 +3795,42 @@
     "m_StageCapability": 3,
     "m_Value": false,
     "m_DefaultValue": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "954239060f004b6baee6da8c05ce36f9",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -269.6000061035156,
+            "y": 948.800048828125,
+            "width": 139.20004272460938,
+            "height": 33.60003662109375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "ccf5d3db3c8041149abcf3f71c16e228"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "70f5be67583c4ce997f85b03d47ee1f3"
+    }
 }
 
 {
@@ -3669,6 +3941,34 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "9e429f19f34a41a8bba7a8bdbe7fc8ea",
+    "m_Guid": {
+        "m_GuidSerialized": "84268f41-5311-40b4-9988-ab0dc9fd907d"
+    },
+    "m_Name": "Sand_Tiling",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Sand_Tiling",
+    "m_DefaultReferenceName": "_Sand_Tiling",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.23999999463558198,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
     "m_ObjectId": "9ee2f9ba9c4c49a7befe6b34474727fe",
@@ -3739,6 +4039,42 @@
     },
     "m_Labels": [],
     "m_Space": 4
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "a641194122454b808f3b8d3fa635e3fd",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -321.6000061035156,
+            "y": -270.3999938964844,
+            "width": 135.20001220703126,
+            "height": 33.600006103515628
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "f327e784830647a7bf8acf1c55f87ec8"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "9e429f19f34a41a8bba7a8bdbe7fc8ea"
+    }
 }
 
 {
@@ -4093,6 +4429,21 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "b6fdf6a149234573845be1188ac3d38c",
+    "m_Id": 0,
+    "m_DisplayName": "Water_Tiling",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -4506,6 +4857,78 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "c5dbcd3ce4a54d63a40079cb3d1a9146",
+    "m_Group": {
+        "m_Id": "0ece4a43e70944bdaf21bfd314ab260b"
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -276.79998779296877,
+            "y": -1490.400146484375,
+            "width": 139.99998474121095,
+            "height": 33.5999755859375
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "b6fdf6a149234573845be1188ac3d38c"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "dc6cf463093943bdb01a8db2b23448da"
+    }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "c7141f06aab64d7aab4da0762f54fa57",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": -209.60000610351563,
+            "y": 3698.39990234375,
+            "width": 136.80001831054688,
+            "height": 33.60009765625
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "c950295b740b416a80af1f63cefc4b90"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "8e745251779749b0a2ae5b7eb54ba21c"
+    }
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.LerpNode",
     "m_ObjectId": "c7e3d24ee21b4e5eaa7b171f14563167",
     "m_Group": {
@@ -4582,6 +5005,21 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "SurfaceDescription.Occlusion"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "c950295b740b416a80af1f63cefc4b90",
+    "m_Id": 0,
+    "m_DisplayName": "Snow_Tiling",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -4720,6 +5158,21 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "ccf5d3db3c8041149abcf3f71c16e228",
+    "m_Id": 0,
+    "m_DisplayName": "Grass_Tiling",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
 }
 
 {
@@ -4920,6 +5373,34 @@
 {
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "d891f93ecda841dea69bdbf51a9864c7",
+    "m_Guid": {
+        "m_GuidSerialized": "279c34a3-2d7e-4e56-88ea-0cd67dedb35f"
+    },
+    "m_Name": "Rocks_Tiling",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Rocks_Tiling",
+    "m_DefaultReferenceName": "_Rocks_Tiling",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.33000001311302187,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "da2d4d3ace97492e828edcc69258e030",
     "m_Guid": {
         "m_GuidSerialized": "862fca21-3476-4bc2-b767-7b9938682816"
@@ -5000,6 +5481,34 @@
         "y": 0.0,
         "z": 0.0,
         "w": 0.0
+    }
+}
+
+{
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "dc6cf463093943bdb01a8db2b23448da",
+    "m_Guid": {
+        "m_GuidSerialized": "f7ea5613-46be-47d9-a071-1fb026da411f"
+    },
+    "m_Name": "Water_Tiling",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Water_Tiling",
+    "m_DefaultReferenceName": "_Water_Tiling",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 0.699999988079071,
+    "m_FloatType": 0,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
     }
 }
 
@@ -5398,6 +5907,21 @@
     "m_StageCapability": 3,
     "m_Value": 0.6000000238418579,
     "m_DefaultValue": 1.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "f327e784830647a7bf8acf1c55f87ec8",
+    "m_Id": 0,
+    "m_DisplayName": "Sand_Tiling",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": 0.0,
+    "m_DefaultValue": 0.0,
     "m_Labels": []
 }
 

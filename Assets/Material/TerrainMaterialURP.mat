@@ -98,7 +98,27 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Water:
-        m_Texture: {fileID: 2800000, guid: 42b5b112f8157804793b878912d00f2d, type: 3}
+        m_Texture: {fileID: 2800000, guid: cee9b70c3e04cda4fa915b3bed5122e0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Water_AO_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Water_Color_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Water_Height_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Water_Normal_Map:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Water_Spec_Map:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -133,22 +153,27 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Grass_Height: 11.5
+    - _Grass_Tiling: 0.00001
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Rocks_Height: 25.2
+    - _Rocks_Height: 24
+    - _Rocks_Tiling: 0.06
     - _Sand_Height: 2.3
+    - _Sand_Tiling: 0.06
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
-    - _Snow_Height: 25.8
+    - _Snow_Height: 25.67
+    - _Snow_Tiling: 0.06
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _Water_Height: 0
+    - _Water_Height: -0.36
+    - _Water_Tiling: 0.032
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
