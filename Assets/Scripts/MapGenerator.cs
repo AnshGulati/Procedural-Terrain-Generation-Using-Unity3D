@@ -119,6 +119,11 @@ public class MapGenerator : MonoBehaviour
             for (int i = 0; i < mapDataThreadInfoQueue.Count; i++)
             {
                 MapThreadInfo<MapData> threadInfo = mapDataThreadInfoQueue.Dequeue();
+
+                // Safe to update Unity objects here (main thread)
+                textureData.UpdateMeshHeights(terrainMaterial, threadInfo.parameter.minHeight, threadInfo.parameter.maxHeight);
+                textureData.ApplyToMaterial(terrainMaterial);
+
                 threadInfo.callback(threadInfo.parameter);
             }
         }
@@ -133,13 +138,18 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
+
     MapData GenerateMapData(Vector2 centre)
     {
-        float[,] noiseMap = Noise.GenerateNoiseMap(mapChunkSize + 2, mapChunkSize + 2, noiseData.seed, noiseData.noiseScale, noiseData.octaves, noiseData.persistance, noiseData.lacunarity, centre + noiseData.offset, noiseData.normalizeMode);
+        float[,] noiseMap = Noise.GenerateNoiseMap(
+            mapChunkSize + 2, mapChunkSize + 2,
+            noiseData.seed, noiseData.noiseScale,
+            noiseData.octaves, noiseData.persistance,
+            noiseData.lacunarity, centre + noiseData.offset,
+            noiseData.normalizeMode);
 
         if (terrainData.useFalloff)
         {
-
             if (falloffMap == null)
             {
                 falloffMap = FalloffGenerator.GenerateFalloffMap(mapChunkSize + 2);
@@ -149,20 +159,15 @@ public class MapGenerator : MonoBehaviour
             {
                 for (int x = 0; x < mapChunkSize + 2; x++)
                 {
-                    if (terrainData.useFalloff)
-                    {
-                        noiseMap[x, y] = Mathf.Clamp01(noiseMap[x, y] - falloffMap[x, y]);
-                    }
-
+                    noiseMap[x, y] = Mathf.Clamp01(noiseMap[x, y] - falloffMap[x, y]);
                 }
             }
-
         }
 
-        textureData.UpdateMeshHeights(terrainMaterial,terrainData.minHeight,terrainData.maxHeight);
-
-        return new MapData(noiseMap);
+        // Don't call UpdateMeshHeights here (background thread)
+        return new MapData(noiseMap, terrainData.minHeight, terrainData.maxHeight);
     }
+
 
     void OnValidate()
     {
@@ -203,9 +208,13 @@ public class MapGenerator : MonoBehaviour
 public struct MapData
 {
     public readonly float[,] heightMap;
+    public readonly float minHeight;
+    public readonly float maxHeight;
 
-    public MapData(float[,] heightMap)
+    public MapData(float[,] heightMap, float minHeight, float maxHeight)
     {
         this.heightMap = heightMap;
+        this.minHeight = minHeight;
+        this.maxHeight = maxHeight;
     }
 }
