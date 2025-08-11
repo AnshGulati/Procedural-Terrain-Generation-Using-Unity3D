@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using System;
 using System.Threading;
 using System.Collections.Generic;
@@ -13,6 +12,7 @@ public class MapGenerator : MonoBehaviour
     public TerrainData terrainData;
     public NoiseData noiseData;
     public TextureData textureData;
+    public ObjectData objectData;
 
     public Material terrainMaterial;
 
@@ -25,6 +25,7 @@ public class MapGenerator : MonoBehaviour
 
     Queue<MapThreadInfo<MapData>> mapDataThreadInfoQueue = new Queue<MapThreadInfo<MapData>>();
     Queue<MapThreadInfo<MeshData>> meshDataThreadInfoQueue = new Queue<MapThreadInfo<MeshData>>();
+    Queue<MapThreadInfo<List<ObjectGenerator.ObjectSpawnData>>> objectDataThreadInfoQueue = new Queue<MapThreadInfo<List<ObjectGenerator.ObjectSpawnData>>>();
 
 
     void OnValuesUpdated()
@@ -44,8 +45,6 @@ public class MapGenerator : MonoBehaviour
     {
         get
         {
-
-
             if (terrainData.useFlatShading)
             {
                 return 95;
@@ -103,12 +102,35 @@ public class MapGenerator : MonoBehaviour
         new Thread(threadStart).Start();
     }
 
+    public void RequestObjectData(MapData mapData, Vector2 centre, Action<List<ObjectGenerator.ObjectSpawnData>> callback)
+    {
+        ThreadStart threadStart = delegate {
+            ObjectDataThread(mapData, centre, callback);
+        };
+        new Thread(threadStart).Start();
+    }
+
     void MeshDataThread(MapData mapData, int lod, Action<MeshData> callback)
     {
         MeshData meshData = MeshGenerator.GenerateTerrainMesh(mapData.heightMap, terrainData.meshHeightMultiplier, terrainData.meshHeightCurve, lod, terrainData.useFlatShading);
         lock (meshDataThreadInfoQueue)
         {
             meshDataThreadInfoQueue.Enqueue(new MapThreadInfo<MeshData>(callback, meshData));
+        }
+    }
+
+    void ObjectDataThread(MapData mapData, Vector2 centre, Action<List<ObjectGenerator.ObjectSpawnData>> callback)
+    {
+        Debug.Log($"MapGenerator: Starting object data generation for chunk at {centre}");
+
+        // Pass 'textureData' as a new argument
+        List<ObjectGenerator.ObjectSpawnData> objectSpawnData = ObjectGenerator.Generate(objectData, textureData, mapData.heightMap, terrainData, centre);
+
+        Debug.Log($"MapGenerator: Generated {objectSpawnData.Count} objects for chunk at {centre}");
+
+        lock (objectDataThreadInfoQueue)
+        {
+            objectDataThreadInfoQueue.Enqueue(new MapThreadInfo<List<ObjectGenerator.ObjectSpawnData>>(callback, objectSpawnData));
         }
     }
 
@@ -133,6 +155,15 @@ public class MapGenerator : MonoBehaviour
             for (int i = 0; i < meshDataThreadInfoQueue.Count; i++)
             {
                 MapThreadInfo<MeshData> threadInfo = meshDataThreadInfoQueue.Dequeue();
+                threadInfo.callback(threadInfo.parameter);
+            }
+        }
+
+        if (objectDataThreadInfoQueue.Count > 0)
+        {
+            for (int i = 0; i < objectDataThreadInfoQueue.Count; i++)
+            {
+                MapThreadInfo<List<ObjectGenerator.ObjectSpawnData>> threadInfo = objectDataThreadInfoQueue.Dequeue();
                 threadInfo.callback(threadInfo.parameter);
             }
         }

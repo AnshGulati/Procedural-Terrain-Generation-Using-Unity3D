@@ -13,3 +13,34 @@ MonoBehaviour:
   m_Name: Default Texture
   m_EditorClassIdentifier: 
   autoUpdate: 0
+  layers:
+  - texture: {fileID: 2800000, guid: cee9b70c3e04cda4fa915b3bed5122e0, type: 3}
+    tint: {r: 0, g: 0, b: 0, a: 0}
+    tintStrength: 0
+    startHeight: 0
+    blendStrength: 0
+    textureScale: 0
+  - texture: {fileID: 2800000, guid: 5a7ad83fd5651384fbbe4f5795f40939, type: 3}
+    tint: {r: 0, g: 0, b: 0, a: 0}
+    tintStrength: 0
+    startHeight: 0.05
+    blendStrength: 0
+    textureScale: 0
+  - texture: {fileID: 2800000, guid: 65c61f9a1dce25749a68646aa0d7e4c3, type: 3}
+    tint: {r: 0, g: 0, b: 0, a: 0}
+    tintStrength: 0
+    startHeight: 0.15
+    blendStrength: 0
+    textureScale: 0
+  - texture: {fileID: 2800000, guid: 308b82f3adbdd8140bd87b6ebcdd3898, type: 3}
+    tint: {r: 0, g: 0, b: 0, a: 0}
+    tintStrength: 0
+    startHeight: 0.4
+    blendStrength: 0
+    textureScale: 0
+  - texture: {fileID: 2800000, guid: 047434fb19ffe654a8962188877c8426, type: 3}
+    tint: {r: 0, g: 0, b: 0, a: 0}
+    tintStrength: 0
+    startHeight: 0.8
+    blendStrength: 0
+    textureScale: 0
