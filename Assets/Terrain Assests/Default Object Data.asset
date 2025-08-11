@@ -31,6 +31,15 @@ MonoBehaviour:
       maxHeight: 24
       maxSlope: 35
     spawnableTextureIndices: 02000000
+  - name: Enemy
+    prefab: {fileID: 8109162336476961689, guid: f618f3a2a2bded54d871db6d67a30e48,
+      type: 3}
+    threshold: 0.3
+    rules:
+      minHeight: 11.5
+      maxHeight: 24
+      maxSlope: 35
+    spawnableTextureIndices: 02000000
   minObjectRadius: 8
   objectSeed: 8
   noiseScale: 1000
