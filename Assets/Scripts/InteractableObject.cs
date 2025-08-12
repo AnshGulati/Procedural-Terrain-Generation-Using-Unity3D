@@ -1,0 +1,32 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class InteractableObject : MonoBehaviour
+{
+    public bool playerInRange;
+    public string ItemName;
+
+    // Reference
+    public string GetItemName()
+    {
+        return ItemName;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0) && playerInRange && SelectionManager.Instance.onTarget && SelectionManager.Instance.selectedObject == gameObject)
+        {
+            if (!InventorySystem.Instance.CheckIfFull())
+            {
+                InventorySystem.Instance.AddToInventory(ItemName);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("Inventory is full");
+            }
+
+        }
+    }
+}
