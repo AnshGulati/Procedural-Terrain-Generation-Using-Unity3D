@@ -812,7 +812,7 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI enemiesKilledText;
 
     [Header("Score Settings")]
-    private int enemiesKilled = 0;
+    public static int enemiesKilled = 0;
     private bool isFiveDamage = true;
 
     void Awake()
@@ -1029,7 +1029,7 @@ public class PlayerController : MonoBehaviour
     {
         if (enemiesKilledText != null)
         {
-            enemiesKilledText.text = "Enemies Killed: " + enemiesKilled;
+            enemiesKilledText.text = enemiesKilled.ToString();
         }
     }
 
