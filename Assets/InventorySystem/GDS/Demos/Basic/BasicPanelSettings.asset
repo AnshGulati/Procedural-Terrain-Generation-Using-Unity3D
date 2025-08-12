@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 19101, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: BasicPanelSettings
   m_EditorClassIdentifier: 
-  themeUss: {fileID: -4733365628477956816, guid: 713406d6855c5cd4e9a68dfd7ec4d241, type: 3}
+  themeUss: {fileID: -4733365628477956816, guid: 713406d6855c5cd4e9a68dfd7ec4d241,
+    type: 3}
   m_TargetTexture: {fileID: 0}
   m_ScaleMode: 2
   m_ReferenceSpritePixelsPerUnit: 100
