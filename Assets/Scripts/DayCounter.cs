@@ -14,8 +14,8 @@ public class DayCounter : MonoBehaviour
 
     void Start()
     {
-        blendValue = dayNightMaterial.GetFloat("BlendValue");
-        timeScale = dayNightMaterial.GetFloat("TimeScale");
+        blendValue = dayNightMaterial.GetFloat("_BlendValue");
+        timeScale = dayNightMaterial.GetFloat("_TimeScale");
         UpdateDayText();
     }
 
@@ -24,7 +24,7 @@ public class DayCounter : MonoBehaviour
         // Update BlendValue manually from Time
         blendValue += Time.deltaTime * timeScale;
         if (blendValue > 1f) blendValue -= 1f; // Wrap around
-        dayNightMaterial.SetFloat("BlendValue", blendValue);
+        dayNightMaterial.SetFloat("_BlendValue", blendValue);
 
         // Detect transition from night to day
         if (blendValue < dayThreshold && wasNight)
