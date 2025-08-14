@@ -12,33 +12,33 @@ public static class ObjectGenerator
         // Validation checks
         if (objectData == null)
         {
-            Debug.LogError("ObjectGenerator: ObjectData is null!");
+            //Debug.LogError("ObjectGenerator: ObjectData is null!");
             return new List<ObjectSpawnData>();
         }
         
         if (objectData.placeableObjects == null || objectData.placeableObjects.Length == 0)
         {
-            Debug.LogError("ObjectGenerator: No placeable objects defined in ObjectData!");
+            //Debug.LogError("ObjectGenerator: No placeable objects defined in ObjectData!");
             return new List<ObjectSpawnData>();
         }
         
         if (textureData == null)
         {
-            Debug.LogError("ObjectGenerator: TextureData is null!");
+            //Debug.LogError("ObjectGenerator: TextureData is null!");
             return new List<ObjectSpawnData>();
         }
         
         if (terrainData == null)
         {
-            Debug.LogError("ObjectGenerator: TerrainData is null!");
+            //Debug.LogError("ObjectGenerator: TerrainData is null!");
             return new List<ObjectSpawnData>();
         }
         
-        Debug.Log($"ObjectGenerator: ObjectData has {objectData.placeableObjects.Length} placeable objects");
+        //Debug.Log($"ObjectGenerator: ObjectData has {objectData.placeableObjects.Length} placeable objects");
         for (int i = 0; i < objectData.placeableObjects.Length; i++)
         {
             var obj = objectData.placeableObjects[i];
-            Debug.Log($"Object {i}: {obj.name}, Threshold: {obj.threshold}, MinHeight: {obj.rules.minHeight}, MaxHeight: {obj.rules.maxHeight}, MaxSlope: {obj.rules.maxSlope}");
+            //Debug.Log($"Object {i}: {obj.name}, Threshold: {obj.threshold}, MinHeight: {obj.rules.minHeight}, MaxHeight: {obj.rules.maxHeight}, MaxSlope: {obj.rules.maxSlope}");
         }
 
         var spawnDataList = new List<ObjectSpawnData>();
@@ -46,12 +46,12 @@ public static class ObjectGenerator
         int height = heightMap.GetLength(1);
         var regionSize = new Vector2(width, height);
 
-        Debug.Log($"ObjectGenerator: Starting generation for chunk at {chunkCentre}. Map size: {width}x{height}");
+        //Debug.Log($"ObjectGenerator: Starting generation for chunk at {chunkCentre}. Map size: {width}x{height}");
 
         // Use Poisson Disc Sampling to get nicely spaced points
         List<Vector2> points = PoissonDiscSampling.GeneratePoints(objectData.minObjectRadius, regionSize, objectData.objectSeed);
         
-        Debug.Log($"ObjectGenerator: Generated {points.Count} candidate points");
+        //Debug.Log($"ObjectGenerator: Generated {points.Count} candidate points");
 
         foreach (Vector2 point in points)
         {
@@ -97,11 +97,11 @@ public static class ObjectGenerator
                 );
 
                 spawnDataList.Add(new ObjectSpawnData(objectToSpawn.prefab, new Vector2(position.x, position.z), Quaternion.identity, Vector3.one));
-                Debug.Log($"ObjectGenerator: Valid object found - {objectToSpawn.name} at height {worldHeight}, slope {slope}, texture {textureIndex}");
+                //Debug.Log($"ObjectGenerator: Valid object found - {objectToSpawn.name} at height {worldHeight}, slope {slope}, texture {textureIndex}");
             }
         }
         
-        Debug.Log($"ObjectGenerator: Generated {spawnDataList.Count} objects for chunk at {chunkCentre}");
+        //Debug.Log($"ObjectGenerator: Generated {spawnDataList.Count} objects for chunk at {chunkCentre}");
         return spawnDataList;
     }
 

@@ -12,7 +12,7 @@ public class MapGenerator : MonoBehaviour
     public TerrainData terrainData;
     public NoiseData noiseData;
     public TextureData textureData;
-    public ObjectData objectData;
+    public ObjectData[] objectDataArray;
 
     public Material terrainMaterial;
 
@@ -121,16 +121,22 @@ public class MapGenerator : MonoBehaviour
 
     void ObjectDataThread(MapData mapData, Vector2 centre, Action<List<ObjectGenerator.ObjectSpawnData>> callback)
     {
-        Debug.Log($"MapGenerator: Starting object data generation for chunk at {centre}");
+        // Create a list that will hold the combined results.
+        List<ObjectGenerator.ObjectSpawnData> combinedObjectSpawnData = new List<ObjectGenerator.ObjectSpawnData>();
 
-        // Pass 'textureData' as a new argument
-        List<ObjectGenerator.ObjectSpawnData> objectSpawnData = ObjectGenerator.Generate(objectData, textureData, mapData.heightMap, terrainData, centre);
+        // Loop through each ObjectData asset in the array.
+        foreach (ObjectData objectData in objectDataArray)
+        {
+            // Generate the objects for the current asset.
+            List<ObjectGenerator.ObjectSpawnData> objectSpawnData = ObjectGenerator.Generate(objectData, textureData, mapData.heightMap, terrainData, centre);
 
-        Debug.Log($"MapGenerator: Generated {objectSpawnData.Count} objects for chunk at {centre}");
+            // Add the results to our combined list.
+            combinedObjectSpawnData.AddRange(objectSpawnData);
+        }
 
         lock (objectDataThreadInfoQueue)
         {
-            objectDataThreadInfoQueue.Enqueue(new MapThreadInfo<List<ObjectGenerator.ObjectSpawnData>>(callback, objectSpawnData));
+            objectDataThreadInfoQueue.Enqueue(new MapThreadInfo<List<ObjectGenerator.ObjectSpawnData>>(callback, combinedObjectSpawnData));
         }
     }
 

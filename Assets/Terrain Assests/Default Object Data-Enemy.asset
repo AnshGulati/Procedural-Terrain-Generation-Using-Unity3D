@@ -10,37 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a59cf697109f0024bb71d96b9cde0b3b, type: 3}
-  m_Name: Default Object Data
+  m_Name: Default Object Data-Enemy
   m_EditorClassIdentifier: 
   autoUpdate: 1
   placeableObjects:
-  - name: Tree
-    prefab: {fileID: 8274734962294016977, guid: 8d99185e17570a34980db737d1eb4cfd,
-      type: 3}
-    threshold: 0.2
-    rules:
-      minHeight: 11.5
-      maxHeight: 24
-      maxSlope: 35
-    spawnableTextureIndices: 02000000
-  - name: House
-    prefab: {fileID: 919132149155446097, guid: 2e526e529e6959d45b6ddf723753817e, type: 3}
-    threshold: 0.3
-    rules:
-      minHeight: 11.5
-      maxHeight: 24
-      maxSlope: 35
-    spawnableTextureIndices: 02000000
   - name: Enemy
     prefab: {fileID: 8109162336476961689, guid: f618f3a2a2bded54d871db6d67a30e48,
       type: 3}
     threshold: 0.3
     rules:
       minHeight: 11.5
-      maxHeight: 24
-      maxSlope: 35
+      maxHeight: 17
+      maxSlope: 21.9
     spawnableTextureIndices: 02000000
-  minObjectRadius: 8
-  objectSeed: 8
+  minObjectRadius: 6
+  objectSeed: 9
   noiseScale: 1000
   noiseOffset: {x: 25.96, y: 3.04}

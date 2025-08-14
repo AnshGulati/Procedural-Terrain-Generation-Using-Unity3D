@@ -1079,3 +1079,4 @@ public class PlayerController : MonoBehaviour
         if (!hit) canMove = camMoveT;
     }
 }
+
