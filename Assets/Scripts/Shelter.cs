@@ -29,10 +29,7 @@ public class Shelter : MonoBehaviour
         blendValue = dayNightMaterial.GetFloat("_BlendValue");
 
         // Show health bar only at night
-        if (blendValue >= nightThreshold)
-            healthBarParent.SetActive(true);
-        else
-            healthBarParent.SetActive(false);
+        healthBarParent.SetActive(blendValue >= nightThreshold);
     }
 
     public void TakeDamage(int damage)
@@ -48,16 +45,49 @@ public class Shelter : MonoBehaviour
 
     public void Repair()
     {
-        currentHP = maxHP;
-        UpdateHealthBar();
+        // Repair cost: 100 coins + 50 wood + 50 stone
+        if (ResourceManager.instance.Coins >= 100 &&
+            ResourceManager.instance.Wood >= 50 &&
+            ResourceManager.instance.Stone >= 50)
+        {
+            ResourceManager.instance.SpendResources(100, 50, 50);
+            currentHP = maxHP;
+            UpdateHealthBar();
+            Debug.Log("Shelter repaired!");
+        }
+        else
+        {
+            Debug.Log("Not enough resources to repair shelter!");
+        }
     }
 
     public void Upgrade()
     {
-        if (currentTier < shelterModels.Length - 1)
+        // Tier 0 → Tier 1: 200 coins + 100 wood + 150 stone
+        if (currentTier == 0 &&
+            ResourceManager.instance.Coins >= 200 &&
+            ResourceManager.instance.Wood >= 100 &&
+            ResourceManager.instance.Stone >= 150)
         {
+            ResourceManager.instance.SpendResources(200, 100, 150);
             currentTier++;
             SetTier(currentTier);
+            Debug.Log("Shelter upgraded to Stone!");
+        }
+        // Tier 1 → Tier 2: 500 coins + 200 wood + 250 stone
+        else if (currentTier == 1 &&
+                 ResourceManager.instance.Coins >= 500 &&
+                 ResourceManager.instance.Wood >= 200 &&
+                 ResourceManager.instance.Stone >= 250)
+        {
+            ResourceManager.instance.SpendResources(500, 200, 250);
+            currentTier++;
+            SetTier(currentTier);
+            Debug.Log("Shelter upgraded to Metal!");
+        }
+        else
+        {
+            Debug.Log("Not enough resources to upgrade!");
         }
     }
 
