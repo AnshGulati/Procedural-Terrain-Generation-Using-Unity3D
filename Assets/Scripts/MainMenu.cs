@@ -19,9 +19,10 @@ public class MainMenu : MonoBehaviour
     {
         //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         loadSceneOne = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+        loadSceneOne.allowSceneActivation = false;
         sceneRequested = true;
         loadingScreen.SetActive(true);
-        mainScreen.SetActive(false); 
+        mainScreen.SetActive(false);
     }
 
     public void Quit()
@@ -35,10 +36,29 @@ public class MainMenu : MonoBehaviour
         {
             if (loadSceneOne.isDone == false)
             {
-                progressImage.fillAmount = loadSceneOne.progress;
-                loadingText.text = loadSceneOne.progress * 100f + "%";
+                //progressImage.fillAmount = loadSceneOne.progress;
+                //loadingText.text = loadSceneOne.progress * 100f + "%";
+
+                float progress = Mathf.Clamp01(loadSceneOne.progress / 0.9f);
+                progressImage.fillAmount = progress;
+                loadingText.text = Mathf.RoundToInt(progress * 100f) + "%";
+
+                // When fully loaded (progress ~0.9), trigger the delay coroutine once
+                if (progress >= 1f && !isDelayStarted)
+                {
+                    StartCoroutine(ActivateSceneAfterDelay(10f)); // 10-second delay
+                }
             }
         }
+    }
+
+    private bool isDelayStarted = false;
+
+    private IEnumerator ActivateSceneAfterDelay(float delay)
+    {
+        isDelayStarted = true;
+        yield return new WaitForSeconds(delay);
+        loadSceneOne.allowSceneActivation = true;
     }
 
 }

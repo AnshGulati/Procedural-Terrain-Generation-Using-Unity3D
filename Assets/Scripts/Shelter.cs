@@ -29,7 +29,7 @@ public class Shelter : MonoBehaviour
         blendValue = dayNightMaterial.GetFloat("_BlendValue");
 
         // Show health bar only at night
-        healthBarParent.SetActive(blendValue >= nightThreshold);
+        healthBarParent.SetActive(blendValue <= nightThreshold);
     }
 
     public void TakeDamage(int damage)

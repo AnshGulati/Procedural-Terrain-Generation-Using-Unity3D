@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f495cd8578a73f541b7ba11ffa308f2a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f495cd8578a73f541b7ba11ffa308f2a,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f495cd8578a73f541b7ba11ffa308f2a,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 50
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f495cd8578a73f541b7ba11ffa308f2a,
         type: 3}
@@ -137,6 +137,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resourceType: 2
-  coinText: {fileID: 0}
-  woodText: {fileID: 0}
-  stoneText: {fileID: 0}
