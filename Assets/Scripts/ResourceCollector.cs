@@ -9,7 +9,7 @@ public class ResourceCollector : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            int value = Random.Range(1, 101) * 10; // 10, 20, ... 1000
+            int value = Random.Range(1, 20) * 10; // 10, 20, ... 200
 
             switch (resourceType)
             {

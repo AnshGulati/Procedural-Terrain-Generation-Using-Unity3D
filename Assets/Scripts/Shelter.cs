@@ -16,6 +16,13 @@ public class Shelter : MonoBehaviour
     private int currentTier = 0;
     private float blendValue;
 
+    private bool canAccessbuilder = false;
+    public GameObject builderHall;
+    public GameObject repairUI;
+    public GameObject upgradeUI0;
+    public GameObject upgradeUI1;
+    public GameObject upgradeUI2;
+
     private void Start()
     {
         SetTier(0); // Start with Wooden
@@ -30,6 +37,22 @@ public class Shelter : MonoBehaviour
 
         // Show health bar only at night
         healthBarParent.SetActive(blendValue <= nightThreshold);
+
+        if (canAccessbuilder && Input.GetKeyDown(KeyCode.B))
+        {
+            Time.timeScale = 0;
+            builderHall.SetActive(true);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        canAccessbuilder = true;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        canAccessbuilder = false;
     }
 
     public void TakeDamage(int damage)
@@ -41,6 +64,12 @@ public class Shelter : MonoBehaviour
             GameOver();
         }
         UpdateHealthBar();
+    }
+
+    public void RepairUI()
+    {
+        builderHall.SetActive(false);
+        repairUI.SetActive(true);
     }
 
     public void Repair()
@@ -59,6 +88,25 @@ public class Shelter : MonoBehaviour
         {
             Debug.Log("Not enough resources to repair shelter!");
         }
+    }
+
+    public void UpgradeUI()
+    {
+        builderHall.SetActive(false);
+
+        if (currentTier == 0)
+        {
+            upgradeUI0.SetActive(true);
+        }
+        else if (currentTier == 1)
+        {
+            upgradeUI1.SetActive(true);
+        }
+        else
+        {
+            upgradeUI2.SetActive(true);
+        }
+
     }
 
     public void Upgrade()

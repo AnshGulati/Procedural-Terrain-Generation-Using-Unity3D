@@ -7234,7 +7234,7 @@ MonoBehaviour:
   dropPrefabs:
   - {fileID: 2391205019451589006, guid: c1735002817381240838d887edf3a417, type: 3}
   - {fileID: 724435363594653502, guid: 931cfdabbd11cc949b6ac287a667a7b9, type: 3}
-  - {fileID: 6168386778592724554, guid: 4a31bd3dc578e2948b83790f9bc3e803, type: 3}
+  - {fileID: 4651979410911563249, guid: 307ee138820794842a82b41f821df255, type: 3}
   dropChance: 0.9
   enemyDamage: 10
   attackDamageDelay: 0.5
