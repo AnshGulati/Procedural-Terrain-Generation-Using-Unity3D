@@ -7236,7 +7236,7 @@ MonoBehaviour:
   - {fileID: 724435363594653502, guid: 931cfdabbd11cc949b6ac287a667a7b9, type: 3}
   - {fileID: 6168386778592724554, guid: 4a31bd3dc578e2948b83790f9bc3e803, type: 3}
   dropChance: 0.9
-  enemyDamage: 2
+  enemyDamage: 10
   attackDamageDelay: 0.5
   attackAnimDuration: 1.5
 --- !u!54 &4446435558752495978
