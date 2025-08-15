@@ -12,6 +12,7 @@ TagManager:
   - PatrolPoint2
   - PatrolPoint3
   - PatrolPoint4
+  - Shelter
   layers:
   - Default
   - TransparentFX
