@@ -15,9 +15,12 @@ public class MainMenu : MonoBehaviour
     public GameObject mainScreen;
     public TextMeshProUGUI loadingText;
 
+    private float displayedProgress = 0f; // what we show on UI
+    private bool isDelayStarted = false;
+
     public void StartGame()
     {
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+
         loadSceneOne = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         loadSceneOne.allowSceneActivation = false;
         sceneRequested = true;
@@ -36,23 +39,23 @@ public class MainMenu : MonoBehaviour
         {
             if (loadSceneOne.isDone == false)
             {
-                //progressImage.fillAmount = loadSceneOne.progress;
-                //loadingText.text = loadSceneOne.progress * 100f + "%";
+                //float progress = Mathf.Clamp01(loadSceneOne.progress / 0.9f);
+                //progressImage.fillAmount = progress;
+                //loadingText.text = Mathf.RoundToInt(progress * 100f) + "%";
 
-                float progress = Mathf.Clamp01(loadSceneOne.progress / 0.9f);
-                progressImage.fillAmount = progress;
-                loadingText.text = Mathf.RoundToInt(progress * 100f) + "%";
+                float targetProgress = Mathf.Clamp01(loadSceneOne.progress / 0.9f);
+                displayedProgress = Mathf.MoveTowards(displayedProgress, targetProgress, Time.deltaTime * 0.3f);
+                progressImage.fillAmount = displayedProgress;
+                loadingText.text = Mathf.RoundToInt(displayedProgress * 100f) + "%";
 
                 // When fully loaded (progress ~0.9), trigger the delay coroutine once
-                if (progress >= 1f && !isDelayStarted)
+                if (displayedProgress >= 1f && !isDelayStarted)
                 {
-                    StartCoroutine(ActivateSceneAfterDelay(10f)); // 10-second delay
+                    StartCoroutine(ActivateSceneAfterDelay(5f)); // delay
                 }
             }
         }
     }
-
-    private bool isDelayStarted = false;
 
     private IEnumerator ActivateSceneAfterDelay(float delay)
     {
