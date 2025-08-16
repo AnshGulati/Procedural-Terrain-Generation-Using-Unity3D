@@ -101,9 +101,20 @@
     "m_SubDatas": [],
     "m_ActiveTargets": [
         {
+            "m_Id": "4d7a7bdf97534bb289610f94690b3bef"
+        },
+        {
             "m_Id": "b9461f37eb874d29a062710d1b10dc39"
         }
     ]
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.BuiltIn.ShaderGraph.BuiltInLitSubTarget",
+    "m_ObjectId": "0c0eb10531cf4f0b84f61d3d55313b8a",
+    "m_WorkflowMode": 1,
+    "m_NormalDropOffSpace": 0
 }
 
 {
@@ -238,6 +249,23 @@
     "m_ObjectId": "4d0e2aa11ae74d919b10044d35cd37e2",
     "m_Name": "",
     "m_ChildObjectList": []
+}
+
+{
+    "m_SGVersion": 2,
+    "m_Type": "UnityEditor.Rendering.BuiltIn.ShaderGraph.BuiltInTarget",
+    "m_ObjectId": "4d7a7bdf97534bb289610f94690b3bef",
+    "m_ActiveSubTarget": {
+        "m_Id": "0c0eb10531cf4f0b84f61d3d55313b8a"
+    },
+    "m_AllowMaterialOverride": false,
+    "m_SurfaceType": 0,
+    "m_ZWriteControl": 0,
+    "m_ZTestMode": 4,
+    "m_AlphaMode": 0,
+    "m_RenderFace": 2,
+    "m_AlphaClip": false,
+    "m_CustomEditorGUI": ""
 }
 
 {
