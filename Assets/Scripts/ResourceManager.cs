@@ -1,21 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager instance;
 
-    //[Header("Current Resources")]
     public int Coins { get; private set; }
     public int Wood { get; private set; }
     public int Stone { get; private set; }
 
     [Header("UI References")]
-    public TextMeshProUGUI coinText;
-    public TextMeshProUGUI woodText;
-    public TextMeshProUGUI stoneText;
+    public List<TextMeshProUGUI> coinTexts;
+    public List<TextMeshProUGUI> woodTexts;
+    public List<TextMeshProUGUI> stoneTexts;
 
     private void Awake()
     {
@@ -56,8 +54,13 @@ public class ResourceManager : MonoBehaviour
 
     private void UpdateUI()
     {
-        if (coinText != null) coinText.text = Coins.ToString();
-        if (woodText != null) woodText.text = Wood.ToString();
-        if (stoneText != null) stoneText.text = Stone.ToString();
+        foreach (var coinText in coinTexts)
+            if (coinText != null) coinText.text = Coins.ToString();
+
+        foreach (var woodText in woodTexts)
+            if (woodText != null) woodText.text = Wood.ToString();
+
+        foreach (var stoneText in stoneTexts)
+            if (stoneText != null) stoneText.text = Stone.ToString();
     }
 }

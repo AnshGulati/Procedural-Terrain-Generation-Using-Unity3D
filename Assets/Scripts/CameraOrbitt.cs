@@ -25,6 +25,9 @@ public class CameraOrbitt : MonoBehaviour
     {
         if (player == null) return;
 
+        // Stop camera movement when game is paused
+        if (Time.timeScale == 0) return;
+
         // Get mouse input
         yaw += Input.GetAxis("Mouse X") * rotationSpeed;
         pitch -= Input.GetAxis("Mouse Y") * rotationSpeed;

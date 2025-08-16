@@ -16,7 +16,7 @@ public class Shelter : MonoBehaviour
     private int currentTier = 0;
     private float blendValue;
 
-    private bool canAccessbuilder = false;
+    public bool canAccessbuilder = false;
     public GameObject builderHall;
     public GameObject repairUI;
     public GameObject upgradeUI0;
@@ -28,6 +28,11 @@ public class Shelter : MonoBehaviour
         SetTier(0); // Start with Wooden
         UpdateHealthBar();
         healthBarParent.SetActive(false);
+        builderHall.SetActive(false);
+        repairUI.SetActive(false);
+        upgradeUI0.SetActive(false);
+        upgradeUI1.SetActive(false);
+        upgradeUI2.SetActive(false);
     }
 
     private void Update()
@@ -42,7 +47,26 @@ public class Shelter : MonoBehaviour
         {
             Time.timeScale = 0;
             builderHall.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
+
+        if (canAccessbuilder && Input.GetKeyDown(KeyCode.N))
+        {
+            ResumeGame();
+        }
+    }
+
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+        builderHall.SetActive(false);
+        repairUI.SetActive(false);
+        upgradeUI0.SetActive(false);
+        upgradeUI1.SetActive(false);
+        upgradeUI2.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,6 +94,8 @@ public class Shelter : MonoBehaviour
     {
         builderHall.SetActive(false);
         repairUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void Repair()
@@ -88,11 +114,14 @@ public class Shelter : MonoBehaviour
         {
             Debug.Log("Not enough resources to repair shelter!");
         }
+        ResumeGame();
     }
 
     public void UpgradeUI()
     {
         builderHall.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
 
         if (currentTier == 0)
         {
@@ -137,6 +166,8 @@ public class Shelter : MonoBehaviour
         {
             Debug.Log("Not enough resources to upgrade!");
         }
+
+        ResumeGame();
     }
 
     private void SetTier(int tier)

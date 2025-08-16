@@ -130,6 +130,7 @@ public class PauseUIScreen : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject controlsMenu;
+    public Shelter shelter;
 
     private bool isPaused = false;
 
@@ -147,7 +148,7 @@ public class PauseUIScreen : MonoBehaviour
     private void Update()
     {
         // Listen for Escape key press to toggle the pause menu
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !shelter.canAccessbuilder)
         {
             if (isPaused)
             {
