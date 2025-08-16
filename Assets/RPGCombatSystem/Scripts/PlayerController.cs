@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour
     [Header("Score Settings")]
     public static int enemiesKilled = 0;
 
+    public Transform respawnPoint;
+    public bool isPlayerDead;
+
     void Awake()
     {
         charCont = GetComponent<CharacterController>();
@@ -222,6 +225,31 @@ public class PlayerController : MonoBehaviour
         charCont.Move(moveDirection * Time.deltaTime);
     }
 
+    public void PlayerDead()
+    {
+        isPlayerDead = true;
+        StartCoroutine(RespawnAfterDelay(3f));
+    }
+
+    private IEnumerator RespawnAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        RespawnPlayer();
+    }
+
+    public void RespawnPlayer()
+    {
+        isPlayerDead = false;
+        if (respawnPoint != null)
+        {
+            transform.position=respawnPoint.position;
+        }
+        currentHealth = maxHealth;
+        stamina = maxStamina;
+        UpdateHealthUI();
+        UpdateStaminaUI();
+    }
+
     void UseStamina(float amount)
     {
         stamina = Mathf.Max(0, stamina - amount);
@@ -247,7 +275,11 @@ public class PlayerController : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - damage);
         UpdateHealthUI();
 
-        if (currentHealth <= 0) Debug.Log("Player has been defeated!");
+        if (currentHealth <= 0)
+        {
+            PlayerDead();
+            Debug.Log("Player has been defeated!");
+        }
     }
 
     void UpdateHealthUI()
