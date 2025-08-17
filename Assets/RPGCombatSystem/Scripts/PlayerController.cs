@@ -56,12 +56,20 @@ public class PlayerController : MonoBehaviour
     public Slider healthSlider;
     public Slider staminaSlider;
     public TextMeshProUGUI enemiesKilledText;
+    public Color damageColor;
+    public Image damageImage;
+    bool isTakingDamage = false;
+    float colorSmoothing=6f;
 
     [Header("Score Settings")]
     public static int enemiesKilled = 0;
 
     public Transform respawnPoint;
     public bool isPlayerDead;
+
+    [Header("Damage Effect Settings")]
+    public float damageFlashDuration = 1f;
+    private float damageFlashTimer=0f;
 
     void Awake()
     {
@@ -221,6 +229,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (damageFlashTimer>0)
+        {
+            damageImage.color = damageColor;
+            damageFlashTimer-=Time.deltaTime;
+        }
+        else
+        {
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, colorSmoothing * Time.deltaTime);
+
+        }
+
         moveDirection.y -= gravity * Time.deltaTime;
         charCont.Move(moveDirection * Time.deltaTime);
     }
@@ -275,8 +294,11 @@ public class PlayerController : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - damage);
         UpdateHealthUI();
 
+        damageFlashTimer = damageFlashDuration;
+
         if (currentHealth <= 0)
         {
+            isTakingDamage = true;
             PlayerDead();
             Debug.Log("Player has been defeated!");
         }
