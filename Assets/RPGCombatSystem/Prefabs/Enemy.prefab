@@ -7239,6 +7239,8 @@ MonoBehaviour:
   enemyDamage: 10
   attackDamageDelay: 0.5
   attackAnimDuration: 1.5
+  deathEffect: {fileID: 2944396702758532163, guid: e190bf97c041e58448af6b043116cba0,
+    type: 3}
 --- !u!54 &4446435558752495978
 Rigidbody:
   m_ObjectHideFlags: 0

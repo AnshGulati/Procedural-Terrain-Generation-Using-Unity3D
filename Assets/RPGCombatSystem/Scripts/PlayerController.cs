@@ -106,22 +106,26 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (isPlayerDead)
+        {
+            if (respawnUI.activeSelf)
+            {
+                if (respawnCounter > 0)
+                {
+                    respawnCounter -= Time.unscaledDeltaTime;
+                    respawnText.text = Mathf.Ceil(respawnCounter).ToString();
+                }
+
+                if (respawnCounter <= 0)
+                {
+                    RespawnPlayer();
+                }
+            }
+            return;
+        }
+
         HandleStaminaRegeneration();
         UpdateStaminaUI();
-
-        if (respawnUI.activeSelf)
-        {
-            if (respawnCounter > 0)
-            {
-                respawnCounter -= Time.unscaledDeltaTime;
-                respawnText.text = Mathf.Ceil(respawnCounter).ToString();
-            }
-
-            if (respawnCounter <= 0)
-            {
-                RespawnPlayer();
-            }
-        }
 
         if (charCont.isGrounded)
         {
@@ -259,7 +263,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             damageImage.color = Color.Lerp(damageImage.color, Color.clear, colorSmoothing * Time.deltaTime);
-
         }
 
         moveDirection.y -= gravity * Time.deltaTime;
@@ -268,17 +271,52 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDead()
     {
+        if (isPlayerDead) return;
         isPlayerDead = true;
-        Time.timeScale = 0;
-        respawnUI.SetActive(true);
-        //StartCoroutine(RespawnAfterDelay(5f));
+
+        if (anim != null)
+        {
+            anim.SetTrigger("Death");
+        }
+        if (soundMan != null)
+        {
+            soundMan.PlaySound("Death");
+        }
+
+        StartCoroutine(HandleDeathSequence());
     }
 
-    private IEnumerator RespawnAfterDelay(float delay)
+    private IEnumerator HandleDeathSequence()
     {
-        yield return new WaitForSeconds(delay);
-        Time.timeScale = 1;
-        RespawnPlayer();
+        // Get the length of the death animation clip
+        float animLength = 0f;
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+
+        // This is a common pattern to get clip length, but it's not foolproof.
+        // It relies on the animation clip being the "current" one playing,
+        // which might not be the case right after setting a trigger.
+        // A more reliable way is to store the clip reference or use a direct
+        // fixed value if the animation length is known and won't change.
+        if (anim.HasState(0, Animator.StringToHash("Death")))
+        {
+            AnimatorClipInfo[] clips = anim.GetNextAnimatorClipInfo(0);
+            if (clips.Length > 0)
+            {
+                animLength = clips[0].clip.length;
+            }
+        }
+
+        // If for some reason we can't get the length, fall back to a reasonable default.
+        if (animLength == 0f)
+        {
+            animLength = 1.5f; // A fallback duration
+        }
+
+        yield return new WaitForSeconds(animLength);
+
+        charCont.enabled = false;
+        Time.timeScale = 0;
+        respawnUI.SetActive(true);
     }
 
     public void RespawnPlayer()
@@ -287,17 +325,24 @@ public class PlayerController : MonoBehaviour
         respawnUI.SetActive(false);
         Time.timeScale = 1;
         respawnCounter = 5f;
+
         if (respawnPoint != null)
         {
             charCont.enabled = false;
             transform.position = respawnPoint.position;
             charCont.enabled = true;
-            //transform.position = respawnPoint.position;
         }
+
         currentHealth = maxHealth;
         stamina = maxStamina;
         UpdateHealthUI();
         UpdateStaminaUI();
+
+        // Trigger the "Respawn" animation transition you created.
+        if (anim != null)
+        {
+            anim.SetTrigger("Respawn");
+        }
     }
 
     void UseStamina(float amount)
@@ -322,10 +367,22 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (isPlayerDead) return;
+
         currentHealth = Mathf.Max(0, currentHealth - damage);
         UpdateHealthUI();
 
         damageFlashTimer = damageFlashDuration;
+
+        if (soundMan != null)
+        {
+            soundMan.PlaySound("Hit");
+        }
+
+        if (anim != null)
+        {
+            anim.SetTrigger("Hurt");
+        }
 
         if (currentHealth <= 0)
         {
@@ -340,23 +397,16 @@ public class PlayerController : MonoBehaviour
         if (healthSlider != null) healthSlider.value = currentHealth;
     }
 
-    // ✅ This method now correctly reduces health by 5 and starts a coroutine
     public void EnemyKilled()
     {
         enemiesKilled++;
         UpdateKillCountUI();
-
-        // Start the coroutine to increase health by 1 after a delay
-        // StartCoroutine(DelayedHealthIncrease());
     }
 
-    // ✅ New coroutine to handle the timed health increase
     private IEnumerator DelayedHealthIncrease()
     {
-        // Wait for 1 second
         yield return new WaitForSeconds(1f);
 
-        // Increase health by 1
         currentHealth = Mathf.Min(maxHealth, currentHealth + 0.3f);
         UpdateHealthUI();
     }

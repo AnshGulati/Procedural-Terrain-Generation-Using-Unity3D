@@ -74,7 +74,7 @@ public class AISimple : MonoBehaviour
 
         for (int i = 1; i < 5; i++)
         {
-            patrolPoints[i-1] = GameObject.FindGameObjectWithTag("PatrolPoint" + i);
+            patrolPoints[i - 1] = GameObject.FindGameObjectWithTag("PatrolPoint" + i);
         }
     }
 
@@ -283,7 +283,7 @@ public class AISimple : MonoBehaviour
             // Only deal damage if the player is still within attack range.
             //if (CanAttackPlayer())
             //{
-                
+
             //}
 
             Debug.Log("Attack True");
