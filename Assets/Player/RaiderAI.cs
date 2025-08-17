@@ -1,132 +1,168 @@
-/*using UnityEngine;
-
-public class RaiderAI : MonoBehaviour
-{
-    public string shelterTag = "Shelter";
-    public float moveSpeed = 3f;
-    public float attackRange = 2f;
-    public float rotationSpeed = 5f;
-
-    private Animator anim;
-    private Transform shelterTarget;
-    private bool isAttacking = false;
-
-    void Start()
-    {
-        anim = GetComponent<Animator>();
-        FindShelter();
-    }
-
-    void Update()
-    {
-        if (shelterTarget == null)
-        {
-            FindShelter();
-            return;
-        }
-
-        float distance = Vector3.Distance(transform.position, shelterTarget.position);
-
-        if (distance > attackRange)
-        {
-            // Rotate towards shelter
-            Vector3 dir = (shelterTarget.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
-
-            // Move forward
-            transform.position += transform.forward * moveSpeed * Time.deltaTime;
-
-            // Play run animation
-            anim.SetBool("isRunning", true);
-            isAttacking = false;
-        }
-        else
-        {
-            // Attack
-            anim.SetBool("isRunning", false);
-            if (!isAttacking)
-            {
-                anim.SetTrigger("attackTrigger");
-                isAttacking = true;
-            }
-        }
-    }
-
-    void FindShelter()
-    {
-        GameObject shelterObj = GameObject.FindGameObjectWithTag(shelterTag);
-        if (shelterObj != null)
-        {
-            shelterTarget = shelterObj.transform;
-        }
-    }
-}*/
-
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RaiderAI : MonoBehaviour
 {
-    public string shelterTag = "Shelter";
-    public float moveSpeed = 3f;
-    public float attackRange = 2f;
-    public float rotationSpeed = 5f;
+    [Header("Movement & Targets")]
+    public Transform shelter;                // Reference to the shelter
+    public List<Transform> standingPoints;   // Points near the shelter
+    private Transform targetPoint;
 
+    [Header("Attack Settings")]
+    public float meleeDist = 2.5f;
+    public float attackAnimDuration = 1.5f;
+    public float attackDamageDelay = 0.5f;
+    public int enemyDamage = 20;
+
+    [Header("Hit Settings")]
+    public int maxHits = 2; // Enemy Death Hit
+    private int hitCount = 0;
+    private bool isInvincible = false;
+
+    private NavMeshAgent agent;
     private Animator anim;
-    private Transform shelterTarget;
-    private bool isAttacking = false;
+    private SoundManager soundMan;
+    private Coroutine attackCoroutine;
 
-    void Start()
+    public enum STATE { MOVING, MELEEATTACK, HIT }
+    public STATE currState = STATE.MOVING;
+    private STATE prevState;
+
+    void Awake()
     {
-        anim = GetComponent<Animator>();
-        FindShelter();
+        agent = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();
+        soundMan = GetComponent<SoundManager>();
+
+        if (shelter != null)
+        {
+            targetPoint = shelter;
+            agent.isStopped = false;
+            agent.SetDestination(targetPoint.position);
+            anim.SetTrigger("isChasing");
+        }
     }
 
     void Update()
     {
-        if (shelterTarget == null)
+        switch (currState)
         {
-            FindShelter();
-            return;
-        }
+            case STATE.MOVING:
+                if (targetPoint == null) return;
 
-        // Calculate the distance and direction to the shelter.
-        Vector3 directionToShelter = shelterTarget.position - transform.position;
-        float distance = directionToShelter.magnitude;
+                // Wait until agent reaches current target
+                if (!agent.pathPending && agent.remainingDistance <= meleeDist)
+                {
+                    // If target was shelter, now pick a random standing point
+                    if (targetPoint == shelter && standingPoints != null && standingPoints.Count > 0)
+                    {
+                        targetPoint = standingPoints[Random.Range(0, standingPoints.Count)];
+                        // Standing Points - targetPosition
+                        agent.SetDestination(targetPoint.position);
+                    }
+                    // If target is already standing point, start attack
+                    else
+                    {
+                        ChangeState(STATE.MELEEATTACK);
+                    }
+                }
+                break;
 
-        // Check if the enemy is within attack range.
-        if (distance <= attackRange)
-        {
-            // Stop running and start attacking.
-            anim.SetBool("isRunning", false);
-            if (!isAttacking)
-            {
-                anim.SetTrigger("attackTrigger");
-                isAttacking = true;
-            }
-        }
-        else
-        {
-            // Move towards the shelter.
-            // Rotate towards the shelter.
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(directionToShelter.x, 0, directionToShelter.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+            case STATE.MELEEATTACK:
+                if (shelter != null) LookTarget(shelter.position, 5f);
+                break;
 
-            // Move the enemy.
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-
-            // Play the run animation.
-            anim.SetBool("isRunning", true);
-            isAttacking = false;
+            case STATE.HIT:
+                //ApplyDmg();
+                break;
         }
     }
 
-    void FindShelter()
+    public void ChangeState(STATE newState)
     {
-        GameObject shelterObj = GameObject.FindGameObjectWithTag(shelterTag);
-        if (shelterObj != null)
+        if (currState == STATE.MELEEATTACK && attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
+
+        if (newState == STATE.HIT)
+            prevState = currState;
+
+        switch (newState)
         {
-            shelterTarget = shelterObj.transform;
+            case STATE.MOVING:
+                agent.isStopped = false;
+                if (targetPoint != null) agent.SetDestination(targetPoint.position);
+                anim.SetTrigger("isChasing");
+                break;
+
+            case STATE.MELEEATTACK:
+                agent.isStopped = true;
+                anim.SetTrigger("isMeleeAttacking");
+                attackCoroutine = StartCoroutine(AttackCoroutine());
+                break;
+
+            case STATE.HIT:
+                agent.isStopped = true;
+                anim.SetTrigger("isHited");
+                break;
         }
+
+        currState = newState;
+    }
+
+    private IEnumerator AttackCoroutine()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(attackDamageDelay);
+
+            // Replace with your shelter damage logic
+            Debug.Log(gameObject.name + " attacks the shelter!");
+
+            yield return new WaitForSeconds(attackAnimDuration - attackDamageDelay);
+        }
+    }
+
+    public void ApplyDmg()
+    {
+        if (isInvincible) return;
+
+        isInvincible = true;
+        hitCount++;
+        // Moving -> Player Attack -> Enemy Attack
+        //ChangeState(STATE.MELEEATTACK);
+
+        if (soundMan != null) soundMan.PlaySound("Hit");
+
+        ChangeState(STATE.HIT);
+
+        StartCoroutine(ResetInvincibility(0.5f));
+
+        if (hitCount >= maxHits) Die();
+    }
+
+    private IEnumerator ResetInvincibility(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isInvincible = false;
+        ChangeState(prevState);
+    }
+
+    private void Die()
+    {
+        foreach (Collider c in GetComponentsInChildren<Collider>()) c.enabled = false;
+        if (agent != null) agent.isStopped = true;
+        if (soundMan != null) soundMan.PlaySound("Death");
+
+        Destroy(gameObject, 0.5f);
+    }
+
+    private void LookTarget(Vector3 targetPos, float speedRot)
+    {
+        Vector3 dir = targetPos - transform.position;
+        dir.y = 0;
+        if (dir != Vector3.zero)
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * speedRot);
     }
 }
