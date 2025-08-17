@@ -7,8 +7,8 @@ public class Shelter : MonoBehaviour
 {
     public int currentHP;
     public int maxHP;
-    public Image healthBar;
     public GameObject healthBarParent;
+    public Slider healthBarSlider;
     public GameObject[] shelterModels; // 0 = Wooden, 1 = Stone, 2 = Metal
 
     private int currentTier = 0;
@@ -22,6 +22,10 @@ public class Shelter : MonoBehaviour
 
     public DayNightSystem dayNightSystem;
     public TimeManager timeManager;
+
+    private float displayedProgress = 1f;
+    public float fillSpeed = 0.3f;
+    private bool isHealthBarActivated = false;
 
     private void Start()
     {
@@ -37,14 +41,19 @@ public class Shelter : MonoBehaviour
 
     private void Update()
     {
-        if (dayNightSystem.currentHour == 22 && timeManager.dayInGame >= 3)
+        if (dayNightSystem.currentHour == 22 && timeManager.dayInGame >= 1 && !isHealthBarActivated)
         {
             healthBarParent.SetActive(true);
+            isHealthBarActivated = true;
+            //float targetProgress = (float)currentHP / maxHP;
+            //displayedProgress = Mathf.MoveTowards(displayedProgress, targetProgress, Time.deltaTime * fillSpeed);
+            //healthBarSlider.value = displayedProgress;
         }
 
         if (dayNightSystem.currentHour == 6)
         {
             healthBarParent.SetActive(false);
+            isHealthBarActivated = false;
         }
 
         if (canAccessbuilder && Input.GetKeyDown(KeyCode.B))
@@ -191,7 +200,7 @@ public class Shelter : MonoBehaviour
 
     private void UpdateHealthBar()
     {
-        healthBar.fillAmount = (float)currentHP / maxHP;
+        healthBarSlider.value = (float)currentHP / maxHP;
     }
 
     private void GameOver()

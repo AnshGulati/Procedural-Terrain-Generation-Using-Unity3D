@@ -59,7 +59,10 @@ public class PlayerController : MonoBehaviour
     public Color damageColor;
     public Image damageImage;
     bool isTakingDamage = false;
-    float colorSmoothing=6f;
+    float colorSmoothing = 6f;
+    public GameObject respawnUI;
+    private float respawnCounter = 5;
+    public TextMeshProUGUI respawnText;
 
     [Header("Score Settings")]
     public static int enemiesKilled = 0;
@@ -69,7 +72,12 @@ public class PlayerController : MonoBehaviour
 
     [Header("Damage Effect Settings")]
     public float damageFlashDuration = 1f;
-    private float damageFlashTimer=0f;
+    private float damageFlashTimer = 0f;
+
+    private void Start()
+    {
+        respawnUI.SetActive(false);
+    }
 
     void Awake()
     {
@@ -100,6 +108,20 @@ public class PlayerController : MonoBehaviour
     {
         HandleStaminaRegeneration();
         UpdateStaminaUI();
+
+        if (respawnUI.activeSelf)
+        {
+            if (respawnCounter > 0)
+            {
+                respawnCounter -= Time.unscaledDeltaTime;
+                respawnText.text = Mathf.Ceil(respawnCounter).ToString();
+            }
+
+            if (respawnCounter <= 0)
+            {
+                RespawnPlayer();
+            }
+        }
 
         if (charCont.isGrounded)
         {
@@ -229,10 +251,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (damageFlashTimer>0)
+        if (damageFlashTimer > 0)
         {
             damageImage.color = damageColor;
-            damageFlashTimer-=Time.deltaTime;
+            damageFlashTimer -= Time.deltaTime;
         }
         else
         {
@@ -247,21 +269,30 @@ public class PlayerController : MonoBehaviour
     public void PlayerDead()
     {
         isPlayerDead = true;
-        StartCoroutine(RespawnAfterDelay(3f));
+        Time.timeScale = 0;
+        respawnUI.SetActive(true);
+        //StartCoroutine(RespawnAfterDelay(5f));
     }
 
     private IEnumerator RespawnAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
+        Time.timeScale = 1;
         RespawnPlayer();
     }
 
     public void RespawnPlayer()
     {
         isPlayerDead = false;
+        respawnUI.SetActive(false);
+        Time.timeScale = 1;
+        respawnCounter = 5f;
         if (respawnPoint != null)
         {
-            transform.position=respawnPoint.position;
+            charCont.enabled = false;
+            transform.position = respawnPoint.position;
+            charCont.enabled = true;
+            //transform.position = respawnPoint.position;
         }
         currentHealth = maxHealth;
         stamina = maxStamina;

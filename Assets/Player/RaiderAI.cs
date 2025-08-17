@@ -6,8 +6,8 @@ using UnityEngine.AI;
 public class RaiderAI : MonoBehaviour
 {
     [Header("Movement & Targets")]
-    public Transform shelter;                // Reference to the shelter
-    public List<Transform> standingPoints;   // Points near the shelter
+    public Transform shelter;
+    public List<Transform> standingPoints;
     private Transform targetPoint;
 
     [Header("Attack Settings")]
@@ -17,7 +17,7 @@ public class RaiderAI : MonoBehaviour
     public int enemyDamage = 20;
 
     [Header("Hit Settings")]
-    public int maxHits = 2; // Enemy Death Hit
+    public int maxHits = 2;
     private int hitCount = 0;
     private bool isInvincible = false;
 
@@ -25,6 +25,7 @@ public class RaiderAI : MonoBehaviour
     private Animator anim;
     private SoundManager soundMan;
     private Coroutine attackCoroutine;
+    private Shelter shelterScript;
 
     public enum STATE { MOVING, MELEEATTACK, HIT }
     public STATE currState = STATE.MOVING;
@@ -39,6 +40,7 @@ public class RaiderAI : MonoBehaviour
         if (shelter != null)
         {
             targetPoint = shelter;
+            shelterScript = shelter.GetComponent<Shelter>();
             agent.isStopped = false;
             agent.SetDestination(targetPoint.position);
             anim.SetTrigger("isChasing");
@@ -51,18 +53,13 @@ public class RaiderAI : MonoBehaviour
         {
             case STATE.MOVING:
                 if (targetPoint == null) return;
-
-                // Wait until agent reaches current target
                 if (!agent.pathPending && agent.remainingDistance <= meleeDist)
                 {
-                    // If target was shelter, now pick a random standing point
                     if (targetPoint == shelter && standingPoints != null && standingPoints.Count > 0)
                     {
                         targetPoint = standingPoints[Random.Range(0, standingPoints.Count)];
-                        // Standing Points - targetPosition
                         agent.SetDestination(targetPoint.position);
                     }
-                    // If target is already standing point, start attack
                     else
                     {
                         ChangeState(STATE.MELEEATTACK);
@@ -75,7 +72,6 @@ public class RaiderAI : MonoBehaviour
                 break;
 
             case STATE.HIT:
-                //ApplyDmg();
                 break;
         }
     }
@@ -117,8 +113,16 @@ public class RaiderAI : MonoBehaviour
         {
             yield return new WaitForSeconds(attackDamageDelay);
 
-            // Replace with your shelter damage logic
-            Debug.Log(gameObject.name + " attacks the shelter!");
+            if (shelterScript != null && shelterScript.currentHP > 0)
+            {
+                shelterScript.TakeDamage(enemyDamage);
+                Debug.Log(gameObject.name + " attacked the shelter for " + enemyDamage + " damage!");
+            }
+
+            if (shelterScript != null && shelterScript.currentHP <= 0)
+            {
+                yield break;
+            }
 
             yield return new WaitForSeconds(attackAnimDuration - attackDamageDelay);
         }
@@ -130,8 +134,6 @@ public class RaiderAI : MonoBehaviour
 
         isInvincible = true;
         hitCount++;
-        // Moving -> Player Attack -> Enemy Attack
-        //ChangeState(STATE.MELEEATTACK);
 
         if (soundMan != null) soundMan.PlaySound("Hit");
 
