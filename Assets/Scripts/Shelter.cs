@@ -151,13 +151,13 @@ public class Shelter : MonoBehaviour
             SetTier(currentTier);
             Debug.Log("Shelter upgraded to Stone!");
         }
-        // Tier 1 → Tier 2: 500 coins + 200 wood + 250 stone
+        // Tier 1 → Tier 2: 300 coins + 200 wood + 250 stone
         else if (currentTier == 1 &&
-                 ResourceManager.instance.Coins >= 500 &&
+                 ResourceManager.instance.Coins >= 300 &&
                  ResourceManager.instance.Wood >= 200 &&
                  ResourceManager.instance.Stone >= 250)
         {
-            ResourceManager.instance.SpendResources(500, 200, 250);
+            ResourceManager.instance.SpendResources(300, 200, 250);
             currentTier++;
             SetTier(currentTier);
             Debug.Log("Shelter upgraded to Metal!");

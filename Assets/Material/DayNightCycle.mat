@@ -109,7 +109,7 @@ Material:
     - _BUILTIN_QueueOffset: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BlendValue: 0.25556046
+    - _BlendValue: 0.5941438
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -134,7 +134,7 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
-    - _TimeScale: 0.01
+    - _TimeScale: 0.005
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
