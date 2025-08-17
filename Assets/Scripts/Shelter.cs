@@ -10,11 +10,8 @@ public class Shelter : MonoBehaviour
     public Image healthBar;
     public GameObject healthBarParent;
     public GameObject[] shelterModels; // 0 = Wooden, 1 = Stone, 2 = Metal
-    public Material dayNightMaterial; // Same material as in DayCounter
-    public float nightThreshold = 0.5f; // When blendValue >= threshold → it's night
 
     private int currentTier = 0;
-    private float blendValue;
 
     public bool canAccessbuilder = false;
     public GameObject builderHall;
@@ -22,6 +19,9 @@ public class Shelter : MonoBehaviour
     public GameObject upgradeUI0;
     public GameObject upgradeUI1;
     public GameObject upgradeUI2;
+
+    public DayNightSystem dayNightSystem;
+    public TimeManager timeManager;
 
     private void Start()
     {
@@ -37,11 +37,15 @@ public class Shelter : MonoBehaviour
 
     private void Update()
     {
-        // Get current BlendValue from the day-night material
-        blendValue = dayNightMaterial.GetFloat("_BlendValue");
+        if (dayNightSystem.currentHour == 22 && timeManager.dayInGame >= 3)
+        {
+            healthBarParent.SetActive(true);
+        }
 
-        // Show health bar only at night
-        healthBarParent.SetActive(blendValue <= nightThreshold);
+        if (dayNightSystem.currentHour == 6)
+        {
+            healthBarParent.SetActive(false);
+        }
 
         if (canAccessbuilder && Input.GetKeyDown(KeyCode.B))
         {
@@ -151,13 +155,13 @@ public class Shelter : MonoBehaviour
             SetTier(currentTier);
             Debug.Log("Shelter upgraded to Stone!");
         }
-        // Tier 1 → Tier 2: 500 coins + 200 wood + 250 stone
+        // Tier 1 → Tier 2: 300 coins + 200 wood + 250 stone
         else if (currentTier == 1 &&
-                 ResourceManager.instance.Coins >= 500 &&
+                 ResourceManager.instance.Coins >= 300 &&
                  ResourceManager.instance.Wood >= 200 &&
                  ResourceManager.instance.Stone >= 250)
         {
-            ResourceManager.instance.SpendResources(500, 200, 250);
+            ResourceManager.instance.SpendResources(300, 200, 250);
             currentTier++;
             SetTier(currentTier);
             Debug.Log("Shelter upgraded to Metal!");
