@@ -7,9 +7,11 @@ public class PauseUIScreen : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject controlsMenu;
-    public Shelter shelter;
+    //public Shelter shelter;
+    public GameObject shelterUI;
 
     private bool isPaused = false;
+    public bool isBuilding = false;
 
     private void Start()
     {
@@ -25,16 +27,33 @@ public class PauseUIScreen : MonoBehaviour
     private void Update()
     {
         // Listen for Escape key press to toggle the pause menu
-        if (Input.GetKeyDown(KeyCode.Escape) && !shelter.canAccessbuilder)
+        //if (Input.GetKeyDown(KeyCode.Escape) && !shelter.canAccessbuilder)
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (isPaused)
+            for (int i = 0; i < shelterUI.transform.childCount; i++)
             {
-                Resume();
+                Transform child = shelterUI.transform.GetChild(i);
+
+                if (child.gameObject.activeSelf)
+                {
+                    isBuilding = true;
+                    break; // stop checking once one active child is found
+                }
             }
-            else
+
+            if (!isBuilding)
             {
-                Pause();
+                if (isPaused)
+                {
+                    Resume();
+                }
+                else
+                {
+                    Pause();
+                }
             }
+            
         }
 
         // Listen for 'R' key press to resume the game
@@ -58,14 +77,17 @@ public class PauseUIScreen : MonoBehaviour
 
     public void Pause()
     {
-        pauseMenu.SetActive(true);
-        controlsMenu.SetActive(false);
-        Time.timeScale = 0;
-        isPaused = true;
+        if (!isBuilding)
+        {
+            pauseMenu.SetActive(true);
+            controlsMenu.SetActive(false);
+            Time.timeScale = 0;
+            isPaused = true;
 
-        // Unlock and show the cursor
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+            // Unlock and show the cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     public void Resume()

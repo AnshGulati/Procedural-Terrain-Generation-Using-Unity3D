@@ -27,6 +27,8 @@ public class Shelter : MonoBehaviour
     public float fillSpeed = 0.3f;
     private bool isHealthBarActivated = false;
 
+    public PauseUIScreen pauseScript;
+
     private void Start()
     {
         SetTier(0); // Start with Wooden
@@ -45,9 +47,6 @@ public class Shelter : MonoBehaviour
         {
             healthBarParent.SetActive(true);
             isHealthBarActivated = true;
-            //float targetProgress = (float)currentHP / maxHP;
-            //displayedProgress = Mathf.MoveTowards(displayedProgress, targetProgress, Time.deltaTime * fillSpeed);
-            //healthBarSlider.value = displayedProgress;
         }
 
         if (dayNightSystem.currentHour == 6)
@@ -72,6 +71,7 @@ public class Shelter : MonoBehaviour
 
     public void ResumeGame()
     {
+        pauseScript.isBuilding = false;
         Time.timeScale = 1;
         builderHall.SetActive(false);
         repairUI.SetActive(false);
