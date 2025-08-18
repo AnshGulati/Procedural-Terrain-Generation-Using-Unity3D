@@ -221,6 +221,9 @@ MonoBehaviour:
   attackAnimDuration: 1.5
   attackDamageDelay: 0.5
   enemyDamage: 1
+  damageTextPrefab: {fileID: 7142085611692283070, guid: 9d700b13dbb1cb64bae2c35b89e6acd9,
+    type: 3}
+  damageTextPos: {fileID: 6090153346220783873}
   maxHits: 3
   currState: 0
 --- !u!1001 &3338583308890089440

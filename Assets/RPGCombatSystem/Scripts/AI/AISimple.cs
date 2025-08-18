@@ -72,9 +72,22 @@ public class AISimple : MonoBehaviour
     {
         // Patrol Points Logic
 
-        for (int i = 1; i < 5; i++)
+        bool hasAnyAssigned = false;
+        foreach (var point in patrolPoints)
         {
-            patrolPoints[i - 1] = GameObject.FindGameObjectWithTag("PatrolPoint" + i);
+            if (point != null)
+            {
+                hasAnyAssigned = true;
+                break;
+            }
+        }
+
+        if (!hasAnyAssigned)
+        {
+            for (int i = 1; i < 5; i++)
+            {
+                patrolPoints[i - 1] = GameObject.FindGameObjectWithTag("PatrolPoint" + i);
+            }
         }
     }
 

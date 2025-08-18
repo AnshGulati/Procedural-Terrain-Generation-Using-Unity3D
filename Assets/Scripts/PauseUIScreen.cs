@@ -7,7 +7,6 @@ public class PauseUIScreen : MonoBehaviour
 {
     public GameObject pauseMenu;
     public GameObject controlsMenu;
-    //public Shelter shelter;
     public GameObject shelterUI;
 
     private bool isPaused = false;
@@ -27,7 +26,6 @@ public class PauseUIScreen : MonoBehaviour
     private void Update()
     {
         // Listen for Escape key press to toggle the pause menu
-        //if (Input.GetKeyDown(KeyCode.Escape) && !shelter.canAccessbuilder)
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -105,19 +103,16 @@ public class PauseUIScreen : MonoBehaviour
     {
         controlsMenu.SetActive(true);
         pauseMenu.SetActive(false);
-        // Time.timeScale remains 0
     }
 
     public void RevertControlScreen()
     {
         controlsMenu.SetActive(false);
         pauseMenu.SetActive(true);
-        // Time.timeScale remains 0
     }
 
     public void HomeScreen()
     {
-        Time.timeScale = 1; // Ensure game is unpaused before loading a new scene
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
 }

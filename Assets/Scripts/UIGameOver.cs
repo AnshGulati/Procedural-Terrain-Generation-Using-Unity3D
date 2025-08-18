@@ -13,13 +13,13 @@ public class UIGameOver : MonoBehaviour
     void Start()
     {
         enemiesKilledText.text = PlayerController.enemiesKilled.ToString();
-        daysCounterText.text = DayCounter.dayCount.ToString();
-        int totalScore = (int)((DayCounter.dayCount * DayCounter.dayCount * 20) + (PlayerController.enemiesKilled * 15));
+        daysCounterText.text = TimeManager.Instance.dayInGame.ToString();
+        int totalScore = (int)((TimeManager.Instance.dayInGame * TimeManager.Instance.dayInGame * 20) + (PlayerController.enemiesKilled * 15));
         scoreCounterText.text = totalScore.ToString();
     }
 
     public void ReturnToMenu()
     {
-        SceneManager.LoadScene(0);
+        Application.Quit();
     }
 }

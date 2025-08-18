@@ -19,6 +19,7 @@ public class Shelter : MonoBehaviour
     public GameObject upgradeUI0;
     public GameObject upgradeUI1;
     public GameObject upgradeUI2;
+    public GameObject builderInfoUI;
 
     public DayNightSystem dayNightSystem;
     public TimeManager timeManager;
@@ -84,6 +85,15 @@ public class Shelter : MonoBehaviour
             isHealthBarActivated = false;
         }
 
+        if (canAccessbuilder)
+        {
+            builderInfoUI.SetActive(true);
+        }
+        else
+        {
+            builderInfoUI.SetActive(false);
+        }
+
         if (canAccessbuilder && Input.GetKeyDown(KeyCode.B))
         {
             Time.timeScale = 0;
@@ -128,13 +138,20 @@ public class Shelter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        canAccessbuilder = true;
+        if (other.CompareTag("Player"))
+        {
+            canAccessbuilder = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        canAccessbuilder = false;
+        if (other.CompareTag("Player"))
+        {
+            canAccessbuilder = false;
+        }
     }
+
 
     public void TakeDamage(int damage)
     {

@@ -30,6 +30,8 @@ public class RaiderAI : MonoBehaviour
     private SoundManager soundMan;
     private Coroutine attackCoroutine;
     private Shelter shelterScript;
+    private PlayerController playerController;
+    public Transform player;
 
     public enum STATE { MOVING, MELEEATTACK, HIT }
     public STATE currState = STATE.MOVING;
@@ -73,6 +75,20 @@ public class RaiderAI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponentInChildren<Animator>();
         soundMan = GetComponent<SoundManager>();
+
+        if (player == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                player = playerObj.transform;
+                playerController = playerObj.GetComponent<PlayerController>();
+            }
+        }
+        else
+        {
+            playerController = player.GetComponent<PlayerController>();
+        }
     }
 
     void Update()
@@ -196,6 +212,11 @@ public class RaiderAI : MonoBehaviour
         foreach (Collider c in GetComponentsInChildren<Collider>()) c.enabled = false;
         if (agent != null) agent.isStopped = true;
         if (soundMan != null) soundMan.PlaySound("Death");
+
+        if (playerController != null)
+        {
+            playerController.EnemyKilled();
+        }
 
         Destroy(gameObject, 0.5f);
     }

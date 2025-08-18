@@ -25,10 +25,15 @@ public class RaidManager : MonoBehaviour
     public GameObject burnEffectPrefab;
     public float burnDeathDelay = 2.0f;
 
+    // NEW: Time delay between each raider spawn
+    public float spawnInterval = 2.5f;
+
     private List<GameObject> activeRaiders = new List<GameObject>();
     private List<GameObject> activeSpawnEffects = new List<GameObject>(); // NEW: List to track active spawn effects
     private bool isRaidActive = false;
     private bool dayEffectTriggered = false;
+
+    public int dayToSpawn = 3;
 
     [Header("Popup UI References")]
     public GameObject RaidPopup;
@@ -60,7 +65,7 @@ public class RaidManager : MonoBehaviour
             return;
         }
 
-        if (dayNightSystem.currentHour == 22 && timeManager.dayInGame >= 1 && !isRaidActive)
+        if (dayNightSystem.currentHour == 22 && timeManager.dayInGame >= dayToSpawn && !isRaidActive)
         {
             StartRaid();
         }
@@ -90,28 +95,37 @@ public class RaidManager : MonoBehaviour
         Debug.Log("Raid started! Raiders are spawning...");
         uiManager?.ShowRaidPopup();
 
-        // Create a list to keep track of which spawn points have been used in this raid
-        List<Transform> usedSpawnPoints = new List<Transform>();
+        StartCoroutine(SpawnRaidersCoroutine());
+    }
 
+    private IEnumerator SpawnRaidersCoroutine()
+    {
+        // Keep track of which spawn points have already been used for effects
+        List<Transform> usedSpawnPointsForEffect = new List<Transform>();
+
+        // Loop for the total number of raiders you want to spawn
         for (int i = 0; i < numberOfRaidersToSpawn; i++)
         {
-            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            // Calculate the index of the spawn point to use this iteration
+            int spawnPointIndex = i % spawnPoints.Length;
+            Transform currentSpawnPoint = spawnPoints[spawnPointIndex];
 
+            // Play spawn sound
             if (spawnSound != null && audioSource != null)
             {
                 audioSource.PlayOneShot(spawnSound);
             }
 
-            // Check if this spawn point already has an effect to avoid overlapping effects at the start
-            if (spawnEffectPrefab != null && !usedSpawnPoints.Contains(randomSpawnPoint))
+            // Instantiate the spawn effect only if this spawn point hasn't had one yet
+            if (spawnEffectPrefab != null && !usedSpawnPointsForEffect.Contains(currentSpawnPoint))
             {
-                // Instantiate the spawn effect and store a reference
-                GameObject newEffect = Instantiate(spawnEffectPrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
+                GameObject newEffect = Instantiate(spawnEffectPrefab, currentSpawnPoint.position, currentSpawnPoint.rotation);
                 activeSpawnEffects.Add(newEffect);
-                usedSpawnPoints.Add(randomSpawnPoint);
+                usedSpawnPointsForEffect.Add(currentSpawnPoint);
             }
 
-            GameObject newRaider = Instantiate(raiderPrefab, randomSpawnPoint.position, randomSpawnPoint.rotation);
+            // Instantiate the raider
+            GameObject newRaider = Instantiate(raiderPrefab, currentSpawnPoint.position, currentSpawnPoint.rotation);
             activeRaiders.Add(newRaider);
 
             RaiderAI raiderAI = newRaider.GetComponent<RaiderAI>();
@@ -119,6 +133,9 @@ public class RaidManager : MonoBehaviour
             {
                 raiderAI.Initialize(standingPoints);
             }
+
+            // Wait for the specified interval before spawning the next raider
+            yield return new WaitForSeconds(spawnInterval);
         }
     }
 
