@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using System.Collections; // Make sure this is included for coroutines
+using System.Collections; 
 
 public struct DmgInfo
 {

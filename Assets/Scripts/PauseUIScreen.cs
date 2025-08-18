@@ -53,7 +53,6 @@ public class PauseUIScreen : MonoBehaviour
                     Pause();
                 }
             }
-            
         }
 
         // Listen for 'R' key press to resume the game
