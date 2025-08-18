@@ -36,8 +36,13 @@ public class Shelter : MonoBehaviour
     public GameObject repairParticlePrefab;
     public GameObject repairParticlePrefab2;
     public AudioClip repairSound;
-
     private AudioSource audioSource;
+
+    [Header("Popup UI References")]
+    public GameObject BuildingUpgradeFailPopup;
+    public GameObject BuildingUpgradePopup;
+    public GameObject BuildingRepairPopup;
+    private UIManager uiManager;
 
     private void Awake()
     {
@@ -50,6 +55,11 @@ public class Shelter : MonoBehaviour
 
     private void Start()
     {
+        uiManager=FindObjectOfType<UIManager>();
+        if(uiManager == null)
+        {
+            Debug.LogError("ResourceManager could not find the UIManager in the scene!");
+        }
         SetTier(0); // Start with Wooden
         UpdateHealthBar();
         healthBarParent.SetActive(false);
@@ -157,6 +167,7 @@ public class Shelter : MonoBehaviour
             UpdateHealthBar();
             healthBarParent.SetActive(false); // Turn off health bar after repair
             Debug.Log("Shelter repaired!");
+            uiManager?.ShowBuildingRepairPopup();
 
             if (repairParticlePrefab != null)
             {
@@ -176,6 +187,8 @@ public class Shelter : MonoBehaviour
         else
         {
             Debug.Log("Not enough resources to repair shelter!");
+            uiManager?.ShowBuildingUpgradeFailPopup();
+
         }
         ResumeGame();
     }
@@ -211,6 +224,7 @@ public class Shelter : MonoBehaviour
             currentTier++;
             SetTier(currentTier);
             Debug.Log("Shelter upgraded to Stone!");
+            uiManager?.ShowBuildingUpgradePopup();
 
             if (upgradeParticlePrefab != null)
             {
@@ -231,6 +245,7 @@ public class Shelter : MonoBehaviour
             currentTier++;
             SetTier(currentTier);
             Debug.Log("Shelter upgraded to Metal!");
+            uiManager?.ShowBuildingUpgradePopup();
 
             if (upgradeParticlePrefab != null)
             {
@@ -245,6 +260,7 @@ public class Shelter : MonoBehaviour
         else
         {
             Debug.Log("Not enough resources to upgrade!");
+            uiManager?.ShowBuildingUpgradeFailPopup();
         }
 
         ResumeGame();

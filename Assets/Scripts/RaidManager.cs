@@ -30,12 +30,25 @@ public class RaidManager : MonoBehaviour
     private bool isRaidActive = false;
     private bool dayEffectTriggered = false;
 
+    [Header("Popup UI References")]
+    public GameObject RaidPopup;
+    private UIManager uiManager;
+
     void Awake()
     {
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    private void Start()
+    {
+        uiManager = FindObjectOfType<UIManager>();
+        if (uiManager == null)
+        {
+            Debug.LogError("ResourceManager could not find the UIManager in the scene!");
         }
     }
 
@@ -75,6 +88,7 @@ public class RaidManager : MonoBehaviour
         isRaidActive = true;
         dayEffectTriggered = false; // Reset the flag for the next raid
         Debug.Log("Raid started! Raiders are spawning...");
+        uiManager?.ShowRaidPopup();
 
         // Create a list to keep track of which spawn points have been used in this raid
         List<Transform> usedSpawnPoints = new List<Transform>();

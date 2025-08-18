@@ -15,10 +15,20 @@ public class ResourceManager : MonoBehaviour
     public List<TextMeshProUGUI> woodTexts;
     public List<TextMeshProUGUI> stoneTexts;
 
+    [Header("Popup UI References")]
+    public GameObject coinPopup;
+    public GameObject woodLogPopup;
+    public GameObject stonePopup;
+
+
+    public float popupDuration = 2f;
+
     [Header("Sound")]
     // FIX: Changed to AudioSource, so we need to reference an AudioClip
     public AudioSource audioSource;
     public AudioClip collectSound;
+
+    private UIManager uiManager;
 
     private void Awake()
     {
@@ -28,6 +38,11 @@ public class ResourceManager : MonoBehaviour
 
     private void Start()
     {
+        uiManager=FindObjectOfType<UIManager>();
+        if (uiManager == null)
+        {
+            Debug.LogError("ResourceManager could not find the UIManager in the scene!");
+        }
         UpdateUI();
     }
 
@@ -35,36 +50,24 @@ public class ResourceManager : MonoBehaviour
     {
         Coins += amount;
         UpdateUI();
-        // FIX: Now we use the proper AudioSource.Play() method
-        if (audioSource != null && collectSound != null)
-        {
-            audioSource.clip = collectSound;
-            audioSource.Play();
-        }
+        PlayCollectSound();
+        uiManager?.ShowCoinPopup();
     }
 
     public void AddWood(int amount)
     {
         Wood += amount;
         UpdateUI();
-        // FIX: Now we use the proper AudioSource.Play() method
-        if (audioSource != null && collectSound != null)
-        {
-            audioSource.clip = collectSound;
-            audioSource.Play();
-        }
+        PlayCollectSound();
+        uiManager?.ShowWoodPopup();
     }
 
     public void AddStone(int amount)
     {
         Stone += amount;
         UpdateUI();
-        // FIX: Now we use the proper AudioSource.Play() method
-        if (audioSource != null && collectSound != null)
-        {
-            audioSource.clip = collectSound;
-            audioSource.Play();
-        }
+        PlayCollectSound();
+        uiManager?.ShowStonePopup();
     }
 
     public void SpendResources(int coins, int wood, int stone)
@@ -85,5 +88,14 @@ public class ResourceManager : MonoBehaviour
 
         foreach (var stoneText in stoneTexts)
             if (stoneText != null) stoneText.text = Stone.ToString();
+    }
+
+    private void PlayCollectSound()
+    {
+        if (audioSource != null && collectSound != null)
+        {
+            audioSource.clip = collectSound;
+            audioSource.Play();
+        }
     }
 }

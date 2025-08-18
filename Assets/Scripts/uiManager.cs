@@ -1,18 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("Animator Controller for Popup")]
-    public Animator popupAnim;
+    [Header("Main Popup Animator")]
+    [Tooltip("The parent object with the Animator that controls all resource popups.")]
+    public Animator popupAnimator;
 
-    private bool isOpen=false;
-
-    // Toggle popup open/close
-    public void TogglePopup()
+    public void ShowWoodPopup()
     {
-        isOpen = !isOpen;
-        popupAnim.SetBool("isOpen", isOpen);
+        if (popupAnimator != null)
+        {
+            popupAnimator.SetTrigger("ShowWood");
+        }
+    }
+
+    public void ShowCoinPopup()
+    {
+        if (popupAnimator != null)
+        {
+            popupAnimator.SetTrigger("ShowCoin");
+        }
+    }
+
+    public void ShowStonePopup()
+    {
+        if (popupAnimator != null)
+        {
+            popupAnimator.SetTrigger("ShowStone");
+        }
+    }
+
+    public void ShowBuildingUpgradePopup()
+    {
+        if (popupAnimator != null)
+        {
+            popupAnimator.SetTrigger("ShowUpgradeSuccess");
+        }
+    }
+
+    public void ShowBuildingUpgradeFailPopup()
+    {
+        if (popupAnimator != null)
+        {
+            popupAnimator.SetTrigger("ShowUpgradeFail");
+        }
+    }
+
+    public void ShowRaidPopup()
+    {
+        if (popupAnimator != null)
+        {
+            popupAnimator.SetTrigger("ShowRaid");
+        }
+    }
+
+    public void ShowBuildingRepairPopup()
+    {
+        if (popupAnimator != null)
+        {
+            popupAnimator.SetTrigger("ShowRepair");
+        }
     }
 }
